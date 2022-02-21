@@ -26,14 +26,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2253337142776444606}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0.70710576, w: 0.7071079}
+  m_LocalPosition: {x: 0.000000014901127, y: 0.000000014901161, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8384641711266376632}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!33 &2760390998417401165
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -143,6 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b387537927d21547a57e259f7b1e1ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ProjectileGameObject: {fileID: 4275046126946689555, guid: b399dd1a17db03249a1a51378c46ccac, type: 3}
   _triggerAction: {fileID: 4315203986380995014, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!1 &6752687061559691742
 GameObject:
