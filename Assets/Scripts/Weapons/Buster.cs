@@ -17,7 +17,8 @@ namespace Assets.Scripts.Weapons
         private readonly Color _chargedColor = Color.red;
 
 
-        [SerializeField] private InputActionReference _triggerAction;
+        [SerializeField]
+        private InputActionReference _triggerAction;
 
         private BusterState _busterState;
 
@@ -68,6 +69,8 @@ namespace Assets.Scripts.Weapons
                     _busterState = BusterState.Charged;
                 }
             }
+
+            Debug.Log(_chargeTime/MaxChargeTime);
 
             _renderer.material.color = Color.Lerp(_baseColor, _chargedColor, _chargeTime/MaxChargeTime);
         }

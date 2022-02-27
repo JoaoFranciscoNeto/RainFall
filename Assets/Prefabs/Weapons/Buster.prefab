@@ -178,8 +178,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ProjectileGameObject: {fileID: 4275046126946689555, guid: b399dd1a17db03249a1a51378c46ccac, type: 3}
   Muzzle: {fileID: 4732116637735821149}
-  ProjectileSpeed: 50
-  ChargeFactor: 20
+  ProjectileSpeed: 5
+  ChargeFactor: 10
   MaxChargeTime: 3
   _triggerAction: {fileID: 4315203986380995014, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!1 &6752687061559691742
