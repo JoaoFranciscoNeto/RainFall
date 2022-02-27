@@ -31,6 +31,11 @@ namespace Assets.Scripts.Weapons
         {
             var entity = collision.gameObject.GetComponentInParent<Entity>();
 
+            if (entity == null)
+            {
+                return;
+            }
+
             entity.ApplyDamage(Damage);
 
             Destroy(gameObject);

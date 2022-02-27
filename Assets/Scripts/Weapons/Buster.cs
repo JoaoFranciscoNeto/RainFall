@@ -3,19 +3,32 @@ namespace Assets.Scripts.Weapons
     using UnityEngine;
     using UnityEngine.InputSystem;
 
-    public class Buster : MonoBehaviour
+    public class ProjectileShooter : MonoBehaviour
     {
         public GameObject ProjectileGameObject;
-
         public GameObject Muzzle;
         public float ProjectileSpeed;
 
+        protected void InstantiateProjectile()
+        {
+            InstantiateProjectile(ProjectileSpeed);
+        }
+
+        protected void InstantiateProjectile(float projectileScaleModifier)
+        {
+            var projectile = Instantiate(ProjectileGameObject, Muzzle.transform.position, Quaternion.identity);
+            projectile.GetComponent<Rigidbody>().velocity = transform.forward*ProjectileSpeed;
+            projectile.transform.localScale *= projectileScaleModifier;
+        }
+    }
+
+    public class Buster : ProjectileShooter
+    {
         public float ChargeFactor;
         public float MaxChargeTime;
 
         private readonly Color _baseColor = Color.yellow;
         private readonly Color _chargedColor = Color.red;
-
 
         [SerializeField]
         private InputActionReference _triggerAction;
@@ -43,14 +56,13 @@ namespace Assets.Scripts.Weapons
         {
             _busterState = BusterState.Idle;
 
-            var projectile = Instantiate(ProjectileGameObject, Muzzle.transform.position, Quaternion.identity);
 
-            var projectileSpeed = ProjectileSpeed+_chargeTime*ChargeFactor;
+            var projectileScale = _chargeTime*ChargeFactor;
 
-            projectile.GetComponent<Rigidbody>().velocity = transform.forward*projectileSpeed;
+            InstantiateProjectile(projectileScale);
+
             _chargeTime = 0;
         }
-
 
         private void TriggerStart(InputAction.CallbackContext obj)
         {
@@ -69,8 +81,6 @@ namespace Assets.Scripts.Weapons
                     _busterState = BusterState.Charged;
                 }
             }
-
-            Debug.Log(_chargeTime/MaxChargeTime);
 
             _renderer.material.color = Color.Lerp(_baseColor, _chargedColor, _chargeTime/MaxChargeTime);
         }
