@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    [SerializeField] protected float MaxHitPoints;
+    [SerializeField]
+    protected float MaxHitPoints;
 
     protected float CurrentHitPoints;
 
