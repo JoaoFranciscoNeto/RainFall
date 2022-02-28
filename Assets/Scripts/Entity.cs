@@ -1,29 +1,32 @@
-using UnityEngine;
-
-public class Entity : MonoBehaviour
+namespace Assets.Scripts
 {
-    [SerializeField]
-    protected float MaxHitPoints;
+    using UnityEngine;
 
-    protected float CurrentHitPoints;
-
-    public void ApplyDamage(float amount)
+    public class Entity : MonoBehaviour
     {
-        CurrentHitPoints -= amount;
+        [SerializeField]
+        protected float MaxHitPoints;
 
-        if (CurrentHitPoints <= 0)
+        protected float CurrentHitPoints;
+
+        public void ApplyDamage(float amount)
         {
-            Destroy(gameObject);
+            CurrentHitPoints -= amount;
+
+            if (CurrentHitPoints <= 0)
+            {
+                Destroy(gameObject);
+            }
         }
-    }
 
-    private void Awake()
-    {
-        CurrentHitPoints = MaxHitPoints;
-    }
+        private void Awake()
+        {
+            CurrentHitPoints = MaxHitPoints;
+        }
 
-    // Update is called once per frame
-    private void Update()
-    {
+        // Update is called once per frame
+        private void Update()
+        {
+        }
     }
 }
