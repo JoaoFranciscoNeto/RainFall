@@ -4,69 +4,54 @@ namespace Assets.Scripts
 
     internal class ChasingState : DroneState
     {
-        private const int Dist = 10;
+        private const int Dist = 1;
 
-        public override Vector3 GetTargetDirection()
+        private readonly Vector3 _strafeDir;
+
+        private readonly Vector3 _boxVolume = new (10, 5, 10);
+
+        public ChasingState()
         {
-            if (Drone.IsAimingAtTarget())
-            {
-                Drone.TransitionTo(new ShootingState());
-                return Drone.transform.forward;
-            }
-
-            if (CanSeeTarget())
-            {
-                return Drone.Target.transform.position-Drone.transform.position;
-            }
-
-
-            return WeightedDirection();
+            _strafeDir = Random.onUnitSphere;
+            _strafeDir.Scale(_boxVolume);
+            Debug.Log(_strafeDir);
         }
 
-        public override float GetSpeedModifier() => 1;
 
         public override void Update()
         {
-            var dir = GetTargetDirection();
-
-            if (dir != Vector3.zero)
+            if (Drone.IsTargetVisible())
             {
-                Drone.RotateTo(dir);
+                Drone.TransitionTo(new ShootingState());
             }
 
-            Drone.transform.position += Drone.Speed * Time.deltaTime * Drone.transform.forward;
+            var t = Drone.Target.transform.position-Drone.transform.position;
+            var a = Avoidance();
+
+            Drone.GetComponent<Rigidbody>().AddForce(
+                Drone.Speed * Time.deltaTime * (t+a).normalized);
+
+            Debug.DrawLine(Drone.transform.position, _strafeDir, Color.green);
         }
 
-        private bool CanSeeTarget()
+
+        private Vector3 Avoidance()
         {
-            var dirToTarget = Drone.Target.transform.position-Drone.transform.position;
-
-            return Physics.Raycast(Drone.transform.position, dirToTarget, out var hitTarget) &&
-                   hitTarget.transform.IsChildOf(Drone.Target.transform);
-        }
-
-
-        private Vector3 WeightedDirection()
-        {
-            var weightedDirection = Drone.Target.transform.position-Drone.transform.position;
+            var weightedDirection = Vector3.zero;
 
             foreach (var direction in AvoidanceHelper.RayCastDirections)
             {
                 var td = Drone.transform.TransformDirection(direction);
 
-                if (Physics.Raycast(Drone.transform.position, td, Dist))
+                if (!Physics.Raycast(Drone.transform.position, td, Dist))
                 {
-                    weightedDirection -= td;
-                    Debug.DrawLine(Drone.transform.position, Drone.transform.position+td, Color.blue);
+                    continue;
                 }
-                else
-                {
-                    weightedDirection += td;
-                }
+
+                weightedDirection -= td;
+                Debug.DrawLine(Drone.transform.position, Drone.transform.position+td, Color.red);
             }
 
-
-            Debug.DrawLine(Drone.transform.position, Drone.transform.position+weightedDirection, Color.cyan);
             return weightedDirection;
         }
     }

@@ -31,14 +31,29 @@ namespace Assets.Scripts.Weapons
         {
             var entity = collision.gameObject.GetComponentInParent<Entity>();
 
-            if (entity == null)
+            if (entity != null)
             {
-                return;
+                entity.ApplyDamage(Damage);
             }
 
-            entity.ApplyDamage(Damage);
 
-            Destroy(gameObject);
+            /*
+            entity.GetComponent<Rigidbody>().AddExplosionForce(10, collision.contacts.First().point, 5);
+
+
+            var colliders = Physics.OverlapSphere(collision.contacts.First().point, 10);
+
+            foreach (var hit in colliders)
+            {
+                var rb = hit.GetComponent<Rigidbody>();
+
+                if (rb != null)
+                {
+                    rb.AddExplosionForce(100, collision.contacts.First().point, 10, 3.0F);
+                }
+            }*/
+
+            //Destroy(gameObject);
         }
     }
 }

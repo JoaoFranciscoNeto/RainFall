@@ -16,9 +16,11 @@ namespace Assets.Scripts.Weapons
 
         protected void InstantiateProjectile(float projectileScaleModifier)
         {
+            Debug.Log("Pew");
             var projectile = Instantiate(ProjectileGameObject, Muzzle.transform.position, Quaternion.identity);
-            projectile.GetComponent<Rigidbody>().velocity = transform.forward*ProjectileSpeed;
+            projectile.GetComponent<Rigidbody>().velocity = transform.forward * ProjectileSpeed;
             projectile.transform.localScale *= projectileScaleModifier;
+            Debug.Log($"{projectile.name} - {projectile.transform.localScale}");
         }
     }
 
@@ -57,7 +59,7 @@ namespace Assets.Scripts.Weapons
             _busterState = BusterState.Idle;
 
 
-            var projectileScale = _chargeTime*ChargeFactor;
+            var projectileScale = _chargeTime * ChargeFactor;
 
             InstantiateProjectile(projectileScale);
 
@@ -82,7 +84,7 @@ namespace Assets.Scripts.Weapons
                 }
             }
 
-            _renderer.material.color = Color.Lerp(_baseColor, _chargedColor, _chargeTime/MaxChargeTime);
+            _renderer.material.color = Color.Lerp(_baseColor, _chargedColor, _chargeTime / MaxChargeTime);
         }
 
         private void OnDestroy()
