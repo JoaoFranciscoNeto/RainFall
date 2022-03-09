@@ -32,8 +32,6 @@ namespace Assets.Scripts
                 var obj = Instantiate(Prefab, pos, Quaternion.identity);
 
                 obj.GetComponent<Rigidbody>().AddForce(transform.forward * 10, ForceMode.Impulse);
-                obj.GetComponent<FloatyThing>().MovementTarget = Camera.main.transform;
-                obj.GetComponent<FloatyThing>().RotationTarget = Camera.main.transform;
             }
         }
 

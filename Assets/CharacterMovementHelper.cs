@@ -26,7 +26,6 @@ namespace Assets
             _characterController.center = center;
         }
 
-        // Start is called before the first frame update
         private void Start()
         {
             _xrRig = GetComponent<XRRig>();
@@ -34,7 +33,6 @@ namespace Assets
             _characterControllerDriver = GetComponent<CharacterControllerDriver>();
         }
 
-        // Update is called once per frame
         private void Update()
         {
             UpdateCharacterController();

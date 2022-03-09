@@ -17,6 +17,7 @@ namespace Assets.Scripts
 
         private DroneState _state;
 
+
         internal void TransitionTo(DroneState state)
         {
             _state = state;

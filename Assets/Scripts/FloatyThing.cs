@@ -1,11 +1,9 @@
 using System.Collections;
+using Assets.Scripts;
 using UnityEngine;
 
 public class FloatyThing : MonoBehaviour
 {
-    public Transform MovementTarget;
-    public Transform RotationTarget;
-
     public float MovementSpeed;
     public float RotationSpeed;
 
@@ -20,6 +18,8 @@ public class FloatyThing : MonoBehaviour
     public int NumberOfPewPews = 10;
 
     public float ProjectileSpeed = 10f;
+    public Entity Target;
+    private Transform MovementTarget;
 
     private float _timeToShoot;
 
@@ -29,6 +29,8 @@ public class FloatyThing : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
         _timeToShoot = Random.Range(1, TimeBetweenShots);
+
+        Target = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Entity>();
     }
 
     private void Update()
@@ -51,7 +53,7 @@ public class FloatyThing : MonoBehaviour
 
     private void Rotate()
     {
-        var dir = RotationTarget.position-transform.position;
+        var dir = Target.transform.position-transform.position;
 
         var rot = Quaternion.Lerp(transform.localRotation, Quaternion.LookRotation(dir, Vector3.up), Time.deltaTime * RotationSpeed);
         _rigidbody.MoveRotation(rot);
@@ -62,7 +64,6 @@ public class FloatyThing : MonoBehaviour
         var dir = MovementTarget.position-transform.position;
         _rigidbody.AddForce(Mathf.Clamp01(dir.magnitude) * MovementSpeed * dir.normalized);
     }
-
 
     private IEnumerator Attack()
     {
@@ -78,9 +79,17 @@ public class FloatyThing : MonoBehaviour
         var dispersion = Random.Range(0f, 1f) < ChanceToHit ? Vector2.zero : Random.insideUnitCircle * MaxDispersion;
         var projection = transform.TransformDirection(new Vector3(dispersion.x, dispersion.y, 0));
 
-        var direction = RotationTarget.transform.position+projection-transform.position;
+        var direction = Target.transform.position+projection-transform.position;
 
         var projectile = Instantiate(Projectile, transform.position+transform.forward * 2, Quaternion.identity);
         projectile.GetComponent<Rigidbody>().AddForce(direction.normalized * ProjectileSpeed, ForceMode.Impulse);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (Target != null)
+        {
+            Gizmos.DrawSphere(Target.transform.position, 0.5f);
+        }
     }
 }

@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 3351880753446020298}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.3211985, y: 5.64, z: 13.078011}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -112,11 +112,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ac16a22d71f02643befea0adb1c765a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementTarget: {fileID: 0}
-  RotationTarget: {fileID: 0}
   MovementSpeed: 1
   RotationSpeed: 1
-  _triggerAction: {fileID: -6395602842196007441, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  ChanceToHit: 1
+  MaxDispersion: 10
+  Projectile: {fileID: 4275046126946689555, guid: 08f143503f3cfe6448d452782e72b839, type: 3}
+  TimeBetweenShots: 5
+  FireRate: 5
+  NumberOfPewPews: 5
+  ProjectileSpeed: 10
 --- !u!54 &3351880753446020340
 Rigidbody:
   m_ObjectHideFlags: 0

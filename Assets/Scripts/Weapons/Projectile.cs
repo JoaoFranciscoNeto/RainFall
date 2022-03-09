@@ -4,10 +4,10 @@ namespace Assets.Scripts.Weapons
 
     public class Projectile : MonoBehaviour
     {
-        public float Damage;
-
         [SerializeField]
-        private readonly float _timeToLive = 5;
+        private const float TimeToLive = 5;
+
+        public float Damage;
 
         private float _timeAlive;
 
@@ -21,7 +21,7 @@ namespace Assets.Scripts.Weapons
         {
             _timeAlive += Time.deltaTime;
 
-            if (_timeAlive >= _timeToLive)
+            if (_timeAlive >= TimeToLive)
             {
                 Destroy(gameObject);
             }
@@ -29,11 +29,15 @@ namespace Assets.Scripts.Weapons
 
         private void OnCollisionEnter(Collision collision)
         {
-            var entity = collision.gameObject.GetComponentInParent<Entity>();
-
-            if (entity != null)
+            if (collision.gameObject != null)
             {
-                entity.ApplyDamage(Damage);
+                var entity = collision.gameObject.GetComponentInChildren<PlayerEntity>();
+
+                if (entity != null)
+                {
+                    entity.ApplyDamage(Damage);
+                    Debug.Log("Pew");
+                }
             }
 
 
@@ -53,7 +57,7 @@ namespace Assets.Scripts.Weapons
                 }
             }*/
 
-            //Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
 }
